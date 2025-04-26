@@ -1,5 +1,6 @@
-import requests  # Import the requests library to handle HTTP requests
 import json
+import requests  # Import the requests library to handle HTTP requests
+
 def emotion_detector(text_to_analyse):  # Define a function named emotional_detector that takes a string input (text_to_analyse)
     # URL of the emotion analysis service
     url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'  # URL of the emosion detector service
@@ -24,9 +25,12 @@ def emotion_detector(text_to_analyse):  # Define a function named emotional_dete
         fear = formatted_response['emotionPredictions'][0]['emotion']['fear']
         joy = formatted_response['emotionPredictions'][0]['emotion']['joy']
         sadness = formatted_response['emotionPredictions'][0]['emotion']['sadness']
-        domain_emotion = max(formatted_response['emotionPredictions'][0]['emotion'], 
-            key=formatted_response['emotionPredictions'][0]['emotion'].get)
-        # If the response status code is 500, set label and score to None
+        domain_emotion = max(
+            formatted_response['emotionPredictions'][0]['emotion'], 
+            key=formatted_response['emotionPredictions'][0]['emotion'].get
+            )
+            
+    # If the response status code is 500, set label and score to None
     if response.status_code == 400:
         anger = None
         disgust = None
@@ -34,7 +38,7 @@ def emotion_detector(text_to_analyse):  # Define a function named emotional_dete
         joy = None
         sadness = None
         domain_emotion = None
-        
+
     return {'anger': anger,
      'disgust': disgust, 
      'fear' : fear,
